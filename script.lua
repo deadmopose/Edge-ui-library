@@ -984,7 +984,7 @@ local function create_window(window_info)
 			function section_functions.new_dropdown(dropdown_info, array, callback)
 				-- Setup
 				
-				assert(type(array) == "table" or type(array) == "function" and callback, "Incorrect table type")
+				assert(type(array) == "table" and #array > 0 or type(array) == "function" and array() > 0 and callback, "Incorrect table type")				
 				
 				
 				-- Variables
@@ -1091,8 +1091,12 @@ local function create_window(window_info)
 						-- Animation
 
 						tween_service:Create(ImageButton, TweenInfo.new(0.25, Enum.EasingStyle.Sine), {Rotation = 0}):Play()
-
-						tween_service:Create(dropdown_content, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {Size = UDim2.fromOffset(dropdown_content.Size.X.Offset, -7)}):Play()
+						
+						if type(array) == "function" and #array() < 3 or type(array) == "table" and #array < 3 then
+							tween_service:Create(dropdown_content, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Size = UDim2.fromOffset(dropdown_content.Size.X.Offset, -7)}):Play()
+						else
+							tween_service:Create(dropdown_content, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {Size = UDim2.fromOffset(dropdown_content.Size.X.Offset, -7)}):Play()
+						end
 
 
 						-- Anti jitter
@@ -1252,7 +1256,7 @@ local function create_window(window_info)
 			function section_functions.new_dropdown2(dropdown_info, array, callback)
 				-- Setup
 
-				assert(type(array) == "table" or type(array) == "function" and callback, "Incorrect table type")
+				assert(type(array) == "table" and #array > 0 or type(array) == "function" and array() > 0 and callback, "Incorrect table type")
 
 
 				-- Variables
@@ -1360,7 +1364,11 @@ local function create_window(window_info)
 
 						tween_service:Create(ImageButton, TweenInfo.new(0.25, Enum.EasingStyle.Sine), {Rotation = 0}):Play()
 
-						tween_service:Create(dropdown_content, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {Size = UDim2.fromOffset(dropdown_content.Size.X.Offset, -7)}):Play()
+						if type(array) == "function" and #array() < 3 or type(array) == "table" and #array < 3 then
+							tween_service:Create(dropdown_content, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Size = UDim2.fromOffset(dropdown_content.Size.X.Offset, -7)}):Play()
+						else
+							tween_service:Create(dropdown_content, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {Size = UDim2.fromOffset(dropdown_content.Size.X.Offset, -7)}):Play()
+						end
 
 
 						-- Anti jitter
