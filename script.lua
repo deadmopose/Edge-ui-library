@@ -219,7 +219,7 @@ local function create_window(window_info)
 		UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
 			if auto_resize_enabled then
 				tab_content.Size = UDim2.new(1, 0, 0, math.clamp(UIListLayout.AbsoluteContentSize.Y + 42, 0, 780))
-				
+
 				if tab_content.Size.Y.Offset == 780 then
 					ScrollingFrame.CanvasSize = UDim2.fromOffset(0, UIListLayout.AbsoluteContentSize.Y + 42)
 				else
@@ -287,7 +287,7 @@ local function create_window(window_info)
 			-- Variables
 
 			local section_functions = {}
-			
+
 			local auto_resize_enabled = false
 
 			local section_busy = false
@@ -386,10 +386,10 @@ local function create_window(window_info)
 				v.InputBegan:Connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 and input.UserInputState == Enum.UserInputState.Begin and not section_busy then
 						-- Variables
-						
+
 						local speed = 0.25 * math.clamp(UIListLayout.AbsoluteContentSize.Y / 266, 1, 1.5)
-						
-						
+
+
 						-- Setup
 
 						section_busy = true
@@ -457,7 +457,7 @@ local function create_window(window_info)
 								anti_jitter:Disconnect()
 
 								section_content.Visible = false
-								
+
 								section_content.Size = UDim2.fromOffset(section_content.Size.X.Offset, 0)
 							end)
 						end
@@ -548,17 +548,17 @@ local function create_window(window_info)
 					end
 				end)
 			end
-			
-			
+
+
 			function section_functions.new_toggle(toggle_info, callback)
 				-- Variables
-				
+
 				local state = false
-				
+
 				local toggle_busy = false
-				
-				
-				
+
+
+
 				-- Create instances
 
 				local toggle = Instance.new("Frame")
@@ -621,22 +621,22 @@ local function create_window(window_info)
 
 				UICorner.CornerRadius = UDim.new(0, 5)
 				UICorner.Parent = toggle
-				
-				
-				
+
+
+
 				-- Connections
-				
+
 				for _, v in pairs({toggle, disabled, enabled}) do
 					v.InputBegan:Connect(function(input)
 						if input.UserInputType == Enum.UserInputType.MouseButton1 and input.UserInputState == Enum.UserInputState.Begin and not toggle_busy and not section_busy and not tab_busy then
 							state = not state
-						
+
 							toggle_info = true
 
 
 							callback(state)
 
-							
+
 							if state then
 								tween_service:Create(disabled, TweenInfo.new(0.25, Enum.EasingStyle.Sine), {ImageTransparency = 1}):Play()
 
@@ -650,8 +650,8 @@ local function create_window(window_info)
 					end)
 				end
 			end
-			
-			
+
+
 			function section_functions.new_text_box(text_box_info, callback)
 				-- Create instances
 
@@ -733,14 +733,14 @@ local function create_window(window_info)
 					end
 				end)
 			end
-			
-			
+
+
 			function section_functions.new_key_bind(key_bind_info, key, callback)
 				-- Setup
 
 				assert(key and type(key) == "string", "Incorrect key type")
-				
-				
+
+
 				-- Variables
 
 				local busy = false
@@ -840,14 +840,14 @@ local function create_window(window_info)
 					end
 				end)
 			end
-			
-			
+
+
 			function section_functions.new_slider(slider_info, min_value, max_value, callback)
 				-- Setup
-				
+
 				assert(min_value and max_value and type(min_value) == "number" and type(max_value) == "number", "Incorrect min_value or max_value")
-				
-				
+
+
 				-- Create instances
 
 				local slider = Instance.new("Frame")
@@ -925,9 +925,9 @@ local function create_window(window_info)
 
 				UICorner_3.CornerRadius = UDim.new(0, 100)
 				UICorner_3.Parent = fill
-				
-				
-				
+
+
+
 				-- Functions
 
 				local function fill_1()
@@ -979,21 +979,21 @@ local function create_window(window_info)
 					end
 				end)
 			end
-			
-			
+
+
 			function section_functions.new_dropdown(dropdown_info, array, callback)
 				-- Setup
-				
-				assert(type(array) == "table" and #array > 0 or type(array) == "function" and array() > 0 and callback, "Incorrect table type")				
-				
-				
+
+				assert(type(array) == "table" and #array > 0 or type(array) == "function" and #array() > 0 and callback, "Incorrect table type")				
+
+
 				-- Variables
-				
+
 				local busy = false
-				
+
 				local selected_element
-				
-				
+
+
 				-- Create instances
 
 				local dropdown = Instance.new("Frame")
@@ -1018,7 +1018,7 @@ local function create_window(window_info)
 				dropdown:SetAttribute("color", dropdown.BackgroundColor3)
 				dropdown:SetAttribute("hover_color", getgenv().color_scheme.elements_hover_color)
 				hover(dropdown)
-				
+
 				UICorner.CornerRadius = UDim.new(0, 5)
 				UICorner.Parent = dropdown
 
@@ -1069,9 +1069,9 @@ local function create_window(window_info)
 				UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 				UIListLayout.Padding = UDim.new(0, 5)
 				UIListLayout.Parent = dropdown_content
-				
-				
-				
+
+
+
 				-- Functions
 
 				local function change_state(state)
@@ -1091,7 +1091,7 @@ local function create_window(window_info)
 						-- Animation
 
 						tween_service:Create(ImageButton, TweenInfo.new(0.25, Enum.EasingStyle.Sine), {Rotation = 0}):Play()
-						
+
 						if type(array) == "function" and #array() < 3 or type(array) == "table" and #array < 3 then
 							tween_service:Create(dropdown_content, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Size = UDim2.fromOffset(dropdown_content.Size.X.Offset, -7)}):Play()
 						else
@@ -1112,27 +1112,27 @@ local function create_window(window_info)
 								end
 							end
 						end)
-						
-						
+
+
 						-- Destroy all elements
 
 						task.delay(speed, function()
 							anti_jitter:Disconnect()
-							
+
 							dropdown_content:SetAttribute("content_open", false)
-							
+
 							dropdown_content.Visible = false
-							
+
 							dropdown_content.Size = UDim2.fromOffset(dropdown_content.Size.X.Offset, 0)
 						end)
 					else
 						dropdown_content:SetAttribute("content_open", true)
-						
+
 						dropdown_content.BackgroundTransparency = 0
-						
+
 						dropdown_content.Visible = true
-						
-					
+
+
 						tween_service:Create(ImageButton, TweenInfo.new(0.25, Enum.EasingStyle.Sine), {Rotation = 180}):Play()
 
 						tween_service:Create(dropdown_content, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Size = UDim2.fromOffset(dropdown_content.Size.X.Offset, UIListLayout.AbsoluteContentSize.Y)}):Play()
@@ -1156,8 +1156,8 @@ local function create_window(window_info)
 							v:Destroy()
 						end
 					end
-					
-					
+
+
 					for _, v in pairs(array) do
 						-- Create instances
 
@@ -1167,7 +1167,7 @@ local function create_window(window_info)
 
 
 						-- Properties
-						
+
 						button.Name = v
 						button.BackgroundColor3 = selected_element == v and getgenv().color_scheme.enabled_color or getgenv().color_scheme.dark_color
 						button.BorderColor3 = Color3.fromRGB(27, 42, 53)
@@ -1201,21 +1201,21 @@ local function create_window(window_info)
 						button.InputBegan:Connect(function(input)
 							if input.UserInputType == Enum.UserInputType.MouseButton1 and input.UserInputState == Enum.UserInputState.Begin and not busy then
 								-- Variables
-								
+
 								local last_selected_element = selected_element
-								
-								
+
+
 								-- Setup
 
 								button:SetAttribute("hover_effect_locked", true)
 
 								selected_element = v ~= selected_element and v or nil
-								
+
 								-- Animation
-								
+
 								if selected_element then
 									tween_service:Create(button, TweenInfo.new(0.25, Enum.EasingStyle.Sine), {BackgroundColor3 = getgenv().color_scheme.enabled_color}):Play()
-									
+
 									if last_selected_element then
 										tween_service:Create(dropdown_content[last_selected_element], TweenInfo.new(0.25, Enum.EasingStyle.Sine), {BackgroundColor3 = getgenv().color_scheme.dark_color}):Play()
 									end
@@ -1251,12 +1251,12 @@ local function create_window(window_info)
 					end)
 				end
 			end
-			
-			
+
+
 			function section_functions.new_dropdown2(dropdown_info, array, callback)
 				-- Setup
 
-				assert(type(array) == "table" and #array > 0 or type(array) == "function" and array() > 0 and callback, "Incorrect table type")
+				assert(type(array) == "table" and #array > 0 or type(array) == "function" and #array() > 0 and callback, "Incorrect table type")
 
 
 				-- Variables
@@ -1474,11 +1474,11 @@ local function create_window(window_info)
 							if input.UserInputType == Enum.UserInputType.MouseButton1 and input.UserInputState == Enum.UserInputState.Begin and not busy then
 								if table.find(selected_elements, v) then
 									table.remove(selected_elements, table.find(selected_elements, v))
-									
-									
+
+
 									button:SetAttribute("color", getgenv().color_scheme.dark_color)
 									button:SetAttribute("hover_color", getgenv().color_scheme.dark_hover_color)
-									
+
 									tween_service:Create(button, TweenInfo.new(0.25, Enum.EasingStyle.Sine), {BackgroundColor3 = getgenv().color_scheme.dark_color}):Play()
 								else
 									table.insert(selected_elements, v)
@@ -1489,8 +1489,8 @@ local function create_window(window_info)
 
 									tween_service:Create(button, TweenInfo.new(0.25, Enum.EasingStyle.Sine), {BackgroundColor3 = getgenv().color_scheme.enabled_color}):Play()
 								end
-								
-								
+
+
 								callback(selected_elements)
 							end
 						end)
